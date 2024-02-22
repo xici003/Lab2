@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +57,15 @@ public class MyAdapter extends BaseAdapter {
         txtTen.setText(itemValues.getName());
         txtPhone.setText(itemValues.getPhoneNumber());
         checkBox.setChecked(itemValues.isStatus());
+        String pathImage = itemValues.getImage();
+        if (pathImage != null && !pathImage.isEmpty()) {
+            Glide.with(context)
+                    .load(pathImage)
+                    .into(image);
+        } else {
+            // Nếu đường dẫn ảnh rỗng, bạn có thể đặt ảnh mặc định cho ImageView ở đây
+            // image.setImageResource(R.drawable.default_image);
+        }
 
         checkBox.setOnClickListener(new View.OnClickListener() {
             @Override

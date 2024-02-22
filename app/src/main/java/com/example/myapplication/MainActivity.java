@@ -28,9 +28,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         listContact = new ArrayList<>();
-        listContact.add(new Contact(1,"Mot","34567","@drawable/hinhnen",false));
-        listContact.add(new Contact(2,"Hai","0987","@drawable/hinhnen",true));
-        listContact.add(new Contact(3,"Ba","56789","@drawable/hinhnen",true));
+        listContact.add(new Contact(1,"Mot","34567","https://png.pngtree.com/png-clipart/20190920/original/pngtree-user-flat-character-avatar-png-png-image_4650324.jpg",false));
+        listContact.add(new Contact(2,"Hai","0987","https://png.pngtree.com/png-clipart/20190920/original/pngtree-user-flat-character-avatar-png-png-image_4651285.jpg",true));
+        listContact.add(new Contact(3,"Ba","56789","https://png.pngtree.com/png-clipart/20190920/original/pngtree-user-flat-character-avatar-png-png-image_4654505.jpg",true));
 
         contactAdapter = new MyAdapter(listContact,this);
 
@@ -88,8 +88,6 @@ public class MainActivity extends AppCompatActivity {
         if(requestCode == 100 && resultCode ==150){
             //truong hop them
             listContact.add(newcontact);
-
-
             contactAdapter.notifyDataSetChanged();
         }
 
