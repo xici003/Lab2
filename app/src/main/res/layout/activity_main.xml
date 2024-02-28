@@ -23,7 +23,7 @@
             android:id="@+id/btnThem"
             android:layout_width="100dp"
             android:layout_height="55dp"
-            android:layout_margin="50dp"
+            android:layout_marginRight="50dp"
             android:text="Thêm mới"
             android:layout_gravity="center"/>
         <Button
@@ -32,5 +32,12 @@
             android:layout_height="55dp"
             android:layout_gravity="center"
             android:text="Xóa"/>
+        <Button
+            android:id="@+id/btnSua"
+            android:layout_width="100dp"
+            android:layout_height="55dp"
+            android:layout_margin="50dp"
+            android:layout_gravity="center"
+            android:text="Sửa"/>
     </LinearLayout>
 </LinearLayout>

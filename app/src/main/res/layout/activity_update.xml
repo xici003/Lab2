@@ -8,35 +8,39 @@
     tools:context=".AddView">
 
     <ImageView
-        android:id="@+id/add_img"
+        android:id="@+id/update_img"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_gravity="center"/>
 
     <EditText
-        android:id="@+id/txtId"
+        android:id="@+id/update_Id"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:inputType="number"
-        android:hint="Id"/>
+      />
     <EditText
-        android:id="@+id/txtName"
+        android:id="@+id/update_Name"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:hint="Họ Tên"/>
+        android:layout_marginTop="20dp" />
     <EditText
-        android:id="@+id/txtPhone"
+        android:id="@+id/update_Phone"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:hint="Số điện thoại"/>
+        android:layout_marginTop="20dp" />
 
     <Button
-        android:id="@+id/btnAdd"
+        android:id="@+id/update_Edit"
         android:layout_width="100dp"
         android:layout_height="55dp"
         android:layout_gravity="center"
         android:layout_marginTop="50dp"
-        android:text="Thêm"/>
+        android:text="Sửa"/>
+    <Button
+        android:id="@+id/update_Cancle"
+        android:layout_width="100dp"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:text="Cancle"/>
 </LinearLayout>
