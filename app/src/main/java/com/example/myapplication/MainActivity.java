@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
         }
         if(requestCode == 300 && resultCode == 120){
             Bundle bu =data.getExtras();
-           // int id_up = bu.getInt("Update_Id");
+            int id_up = bu.getInt("Update_Id");
             String name_up = bu.getString("Update_Name");
             String phone_up = bu.getString("Update_Phone");
             String img= bu.getString("Update_Image");
@@ -165,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
             c.setPhoneNumber(phone_up);
             c.setImage(img);
 
-            db.updateContact(selectItemId,c);
+            db.updateContact(id_up,c);
             contactAdapter.notifyDataSetChanged();
         }
 
