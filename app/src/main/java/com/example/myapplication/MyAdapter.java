@@ -56,7 +56,8 @@ public class MyAdapter extends BaseAdapter {
 
         txtTen.setText(itemValues.getName());
         txtPhone.setText(itemValues.getPhoneNumber());
-        checkBox.setChecked(itemValues.isStatus());
+        boolean status = itemValues.isStatus() == 1 ? true : false;
+        checkBox.setChecked(status);
         String pathImage = itemValues.getImage();
         if (pathImage != null && !pathImage.isEmpty()) {
             Glide.with(context)
@@ -70,7 +71,9 @@ public class MyAdapter extends BaseAdapter {
         checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                data.get(position).setStatus(checkBox.isChecked());
+                if(checkBox.isChecked()){
+                    data.get(position).setStatus(1);
+                }
             }
         });
 

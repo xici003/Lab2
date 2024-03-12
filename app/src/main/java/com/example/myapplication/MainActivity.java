@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,7 +8,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
@@ -25,20 +31,30 @@ public class MainActivity extends AppCompatActivity {
 
     private int selectItemId;
     private Contact c;
+    private MyDB db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        listContact = new ArrayList<>();
-        listContact.add(new Contact(1,"Mot","34567","https://png.pngtree.com/png-clipart/20190920/original/pngtree-user-flat-character-avatar-png-png-image_4650324.jpg",false));
-        listContact.add(new Contact(2,"Hai","0987","https://png.pngtree.com/png-clipart/20190920/original/pngtree-user-flat-character-avatar-png-png-image_4651285.jpg",false));
-        listContact.add(new Contact(3,"Ba","56789","https://png.pngtree.com/png-clipart/20190920/original/pngtree-user-flat-character-avatar-png-png-image_4654505.jpg",true));
+        listViewContact = findViewById(R.id.listview);
 
+        registerForContextMenu(listViewContact);
+
+        listContact = new ArrayList<>();
+       /* listContact.add(new Contact(1,"Mot","34567","https://png.pngtree.com/png-clipart/20190920/original/pngtree-user-flat-character-avatar-png-png-image_4650324.jpg",0));
+        listContact.add(new Contact(2,"Hai","0987","https://png.pngtree.com/png-clipart/20190920/original/pngtree-user-flat-character-avatar-png-png-image_4651285.jpg",0));
+        listContact.add(new Contact(3,"Ba","56789","https://png.pngtree.com/png-clipart/20190920/original/pngtree-user-flat-character-avatar-png-png-image_4654505.jpg",1));*/
+
+        db = new MyDB(this, "ContactDB", null,1);
+      /*  db.addContact(new Contact(0,"Mot","34567","https://png.pngtree.com/png-clipart/20190920/original/pngtree-user-flat-character-avatar-png-png-image_4650324.jpg",0));
+        db.addContact(new Contact(1,"Hai","0987","https://png.pngtree.com/png-clipart/20190920/original/pngtree-user-flat-character-avatar-png-png-image_4651285.jpg",0));
+        db.addContact(new Contact(2,"Ba","56789","https://png.pngtree.com/png-clipart/20190920/original/pngtree-user-flat-character-avatar-png-png-image_4654505.jpg",1));*/
+
+        listContact = db.getAllContact();
         contactAdapter = new MyAdapter(listContact,this);
 
-        listViewContact = findViewById(R.id.listview);
         listViewContact.setAdapter(contactAdapter);
 
         //Xoá khi tích vào checkbox
@@ -54,8 +70,12 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         for(int i=0;i<listContact.size();){
-                            if(listContact.get(i).isStatus()==true){
+                            if(listContact.get(i).isStatus()==1){
+                               /* listContact.remove(i);*/
+                                db.deleteContact(listContact.get(i).getId());
+
                                 listContact.remove(i);
+                                listContact = db.getAllContact();
                             }
                             else i++;
                         }
@@ -73,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 boolean anyItemSelected = false;
                 for(int i=0;i<listContact.size();){
-                    if(listContact.get(i).isStatus()==true){
+                    if(listContact.get(i).isStatus()==1){
                         anyItemSelected = true;
                         selectItemId = i;
                         break;
@@ -107,6 +127,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        listViewContact.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                selectItemId = position;
+                return false;
+            }
+        });
 
     }
 
@@ -118,25 +145,41 @@ public class MainActivity extends AppCompatActivity {
         String name = b.getString("Name");
         String phone = b.getString("Phone");
         String image = b.getString("Image");
-        Contact newcontact = new Contact(id,name,phone,image,false);
+        Contact newcontact = new Contact(id,name,phone,image,0);
         if(requestCode == 100 && resultCode ==150){
             //truong hop them
+            db.addContact(newcontact);
+
+//           listContact = db.getAllContact();
             listContact.add(newcontact);
             contactAdapter.notifyDataSetChanged();
         }
         if(requestCode == 300 && resultCode == 120){
             Bundle bu =data.getExtras();
-            int id_up = bu.getInt("Update_Id");
+           // int id_up = bu.getInt("Update_Id");
             String name_up = bu.getString("Update_Name");
             String phone_up = bu.getString("Update_Phone");
             String img= bu.getString("Update_Image");
-            c.setId(id_up);
+            //c.setId(id_up);
             c.setName(name_up);
             c.setPhoneNumber(phone_up);
             c.setImage(img);
+
+            db.updateContact(selectItemId,c);
             contactAdapter.notifyDataSetChanged();
         }
 
     }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater menuInflater = new MenuInflater(this);
+        menuInflater.inflate(R.menu.context_menu,menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        return super.onContextItemSelected(item);
+    }
 }

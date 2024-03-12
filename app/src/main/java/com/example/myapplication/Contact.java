@@ -6,9 +6,9 @@ public class Contact {
     private String phoneNumber;
 
     private String image;
-    private boolean status;
+    private int status;
 
-    public Contact(int id, String name, String phoneNumber,String image, boolean status) {
+    public Contact(int id, String name, String phoneNumber,String image, int status) {
         this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
@@ -48,11 +48,11 @@ public class Contact {
         this.image = image;
     }
 
-    public boolean isStatus() {
+    public int isStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 }
