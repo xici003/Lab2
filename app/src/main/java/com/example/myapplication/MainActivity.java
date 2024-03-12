@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
             //truong hop them
             db.addContact(newcontact);
 
-//           listContact = db.getAllContact();
+//          listContact = db.getAllContact();
             listContact.add(newcontact);
             contactAdapter.notifyDataSetChanged();
         }
